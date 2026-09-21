@@ -1,0 +1,6 @@
+<?php get_header();?><main id="main" class="canvas archive-page"><section class="article-head"><p class="eyebrow">JOURNAL / POSTS</p><h1><?php if(is_category())single_cat_title();else echo '文章档案';?></h1><p class="lead">WordPress posts and notes.</p></section><div class="posts" style="margin-top:32px"><?php if(have_posts()):$i=1+(max(1,get_query_var('paged'))-1)*get_option('posts_per_page');while(have_posts()):the_post();$c=get_the_category();?><a class="post-row" href="<?php the_permalink();?>"><span class="code">LOG-<?php echo str_pad((string)$i,3,'0',STR_PAD_LEFT);?></span><span class="pill"><?php echo esc_html($c?strtoupper($c[0]->name):'UNCATEGORIZED');?></span><span class="post-title"><?php the_title();?></span><span class="meta"><?php echo esc_html($c?$c[0]->name:'Uncategorized');?></span><time class="date"><?php echo esc_html(get_the_date('Y.m.d'));?></time><i class="arrow">↗</i></a><?php $i++;endwhile;else:?><div class="empty">暂无文章。</div><?php endif;?></div>
+<?php
+$pagi=paginate_links(array('mid_size'=>1,'prev_text'=>'←','next_text'=>'→','type'=>'list'));
+if($pagi):?><nav class="pagination" aria-label="Posts navigation"><?php echo wp_kses_post($pagi);?></nav><?php endif;
+?>
+</main><?php get_footer();?>
